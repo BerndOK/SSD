@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mutable.client;
+package mutable.client.open;
 
-import mutable.service.Credentials;
-import mutable.service.Role;
+import mutable.service.open.Credentials;
+import mutable.service.open.Role;
 
 /**
  *
