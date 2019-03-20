@@ -1,4 +1,4 @@
-package jca.crypt;
+package jca.crypt.symmetric;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -6,7 +6,7 @@ import javax.crypto.KeyGenerator;
 import java.security.Key;
 import java.security.SecureRandom;
 
-public class KeyGeneratorExample {
+public class AESDemo {
    public static void main(String args[]) throws Exception{
       //Creating a KeyGenerator object
       KeyGenerator keyGen = KeyGenerator.getInstance("AES");
@@ -27,7 +27,7 @@ public class KeyGeneratorExample {
       String msg = new String("Hi how are you");
       byte[] bytes = cipher.doFinal(msg.getBytes());      
       System.out.println(new String(bytes));
-      cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+      // cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       cipher.init(cipher.DECRYPT_MODE, key);      
       System.out.println(new String(cipher.doFinal(bytes)));
    }

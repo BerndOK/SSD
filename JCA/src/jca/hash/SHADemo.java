@@ -8,36 +8,16 @@ package jca.hash;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Arrays;
+import java.util.Base64;
 import java.util.Scanner;
 
 /**
  *
  * @author cenuser
  */
-public class HashDemo {
+public class SHADemo {
 
     private final static int MAX_PW = 5;
-
-    private static String hexify(byte[] inp) {
-        StringBuilder hexString = new StringBuilder();
-        for (int i = 0; i < inp.length; i++) {
-            hexString.append(String.format("%02x", inp[i]));
-        }
-        return hexString.toString();
-    }
-
-    private static byte[] bytify(String hexInp) {
-        byte[] val = new byte[hexInp.length() / 2];
-
-        for (int i = 0; i < val.length; i++) {
-            int index = i * 2;
-            int j = Integer.parseInt(hexInp.substring(index, index + 2), 16);
-            val[i] = (byte) j;
-        }
-        return val;
-    }
-
     
     public static void main(String[] args) throws NoSuchAlgorithmException {
 
@@ -56,8 +36,8 @@ public class HashDemo {
             md.update(salt);
             byte[] digest = md.digest(passwords[i].getBytes());
 
-            salts[numHashes] = hexify(salt);
-            hashes[numHashes] = hexify(digest);
+            salts[numHashes] = Base64.getEncoder().encodeToString(salt);
+            hashes[numHashes] = Base64.getEncoder().encodeToString(digest);
             numHashes++;
 
             System.out.println(passwords[i] + " " + salts[i] + " (" + salts[i].length() + ") " +
@@ -66,11 +46,12 @@ public class HashDemo {
         Scanner in = new Scanner(System.in);
         String test = in.nextLine();
         for (int i = 0; i < MAX_PW; i++) {
-            byte[] salt = bytify(salts[i]);
+            byte[] salt = Base64.getDecoder().decode(salts[i]);
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salt);
             byte[] digest = md.digest(test.getBytes());
-            String compare = hexify(digest);
+            // String compare = HexUtils.hexify(digest);
+            String compare = Base64.getEncoder().encodeToString(digest);
             if (compare.equals(hashes[i])) {
                 System.out.println("Found: " + passwords[i]);
             }
