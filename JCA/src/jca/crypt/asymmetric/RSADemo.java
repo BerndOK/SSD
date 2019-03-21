@@ -36,9 +36,9 @@ public class RSADemo {
         PrivateKey privateKey = keys.getPrivate();
         PublicKey publicKey = keys.getPublic();
         String encryptedText = encryptMessage(plainText, publicKey);
-        String descryptedText = decryptMessage(encryptedText, privateKey);
+        String decryptedText = decryptMessage(encryptedText, privateKey);
         System.out.println("input:" + plainText);
         System.out.println("encrypted:" + encryptedText);
-        System.out.println("decrypted:" + descryptedText);
+        System.out.println("decrypted:" + decryptedText);
     }
 }
