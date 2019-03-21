@@ -16,15 +16,15 @@ public class RSADemo {
         return keyPairGenerator.generateKeyPair();
     }
 
-    private static String encryptMessage(String plainText, PrivateKey privateKey) throws Exception {
+    private static String encryptMessage(String plainText, PublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes()));
     }
 
-    private static String decryptMessage(String encryptedText, PublicKey publicKey) throws Exception {
+    private static String decryptMessage(String encryptedText, PrivateKey privateKey) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, publicKey);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText)));
     }
 
@@ -35,8 +35,8 @@ public class RSADemo {
         KeyPair keys = getRSAKeys();
         PrivateKey privateKey = keys.getPrivate();
         PublicKey publicKey = keys.getPublic();
-        String encryptedText = encryptMessage(plainText, privateKey);
-        String descryptedText = decryptMessage(encryptedText, publicKey);
+        String encryptedText = encryptMessage(plainText, publicKey);
+        String descryptedText = decryptMessage(encryptedText, privateKey);
         System.out.println("input:" + plainText);
         System.out.println("encrypted:" + encryptedText);
         System.out.println("decrypted:" + descryptedText);
